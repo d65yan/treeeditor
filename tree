@@ -1,0 +1,245 @@
+level	hid	parent	code	name	leaf	population	connective	bandwidth	weight
+0	2	0	1	Indexes	False	True	False	8050.0	1.0
+0	3	0	2	System	False	False	False	8050.0	1.0
+0	4	0	3	Boundary	False	False	False	8050.0	1.0
+1	5	1	5	Civic and Culture	False	False	False	8050.0	1.0
+1	6	1	6	Health and Wellness	False	False	False	8050.0	1.0
+1	7	1	7	Retail and Commercial	False	False	False	8050.0	1.0
+1	8	1	8	Parks and Recreation	False	False	False	8050.0	1.0
+1	9	1	9	Libraries	False	False	False	8050.0	1.0
+1	10	1	10	Education	False	False	False	8050.0	1.0
+1	11	1	11	Public Safety	False	False	False	8050.0	1.0
+1	12	1	12	Environmental	False	False	False	8050.0	1.0
+1	13	1	13	Real Estate	False	False	False	8050.0	1.0
+1	14	1	14	Transportation	False	False	False	8050.0	1.0
+1	15	1	15	Entertainment	False	False	False	8050.0	1.0
+1	16	2	16	Supermarkets and Other Grocery (except Convenience) Stores	False	False	False	8050.0	1.0
+1	17	2	17	Pharmacies and Drug Stores	False	False	False	8050.0	1.0
+1	18	2	18	Offices of Physicians (except Mental Health Specialists)	False	False	False	8050.0	1.0
+1	19	2	19	Department Stores (except Discount Department Stores)	False	False	False	8050.0	1.0
+1	20	2	20	Motion Picture Theaters (except Drive-Ins)	False	False	False	8050.0	1.0
+1	21	2	21	Museums	False	False	False	8050.0	1.0
+1	22	2	22	Zoos and Botanical Gardens	False	False	False	8050.0	1.0
+1	23	2	23	Amusement and Theme Parks	False	False	False	8050.0	1.0
+1	24	2	24	Fitness and Recreational Sports Centers	False	False	False	8050.0	1.0
+1	25	2	25	Hotels (except Casino Hotels) and Motels	False	False	False	8050.0	1.0
+1	26	2	26	Drinking Places (Alcoholic Beverages)	False	False	False	8050.0	1.0
+1	27	2	27	Restaurants	False	False	False	8050.0	1.0
+1	28	2	28	Gasoline Stations	False	False	False	8050.0	1.0
+1	29	2	29	Retail Trade	False	False	False	8050.0	1.0
+1	30	2	30	Veterinary Services	False	False	False	8050.0	1.0
+1	31	2	31	Information	False	False	False	8050.0	1.0
+1	32	2	32	Professional, Scientific, and Technical Services	False	False	False	8050.0	1.0
+1	33	2	33	Educational Services	False	False	False	8050.0	1.0
+1	34	2	34	Arts, Entertainment, and Recreation	False	False	False	8050.0	1.0
+1	35	2	35	Accommodation and Food Services	False	False	False	8050.0	1.0
+1	36	2	36	Other Services (except Public Administration)	False	False	False	8050.0	1.0
+2	37	16	445110	Supermarkets and Other Grocery (except Convenience) Stores	False	False	False	8050.0	1.0
+2	38	17	446110	Pharmacies and Drug Stores	False	False	False	8050.0	1.0
+2	39	18	621111	Offices of Physicians (except Mental Health Specialists)	False	False	False	8050.0	1.0
+2	40	19	452111	Department Stores (except Discount Department Stores)	False	False	False	8050.0	1.0
+2	44	20	512131	Motion Picture Theaters (except Drive-Ins)	False	False	False	8050.0	1.0
+2	42	21	712110	Museums	False	False	False	8050.0	1.0
+2	43	22	712130	Zoos and Botanical Gardens	False	False	False	8050.0	1.0
+2	41	23	713110	Amusement and Theme Parks	False	False	False	8050.0	1.0
+2	45	24	713940	Fitness and Recreational Sports Centers	False	False	False	8050.0	1.0
+2	46	25	721110	Hotels (except Casino Hotels) and Motels	False	False	False	8050.0	1.0
+2	47	26	722410	Drinking Places (Alcoholic Beverages)	False	False	False	8050.0	1.0
+2	48	27	722511	Full-Service Restaurants	False	False	False	8050.0	1.0
+2	49	27	722513	Limited-Service Restaurants	False	False	False	8050.0	1.0
+2	50	27	722514	Cafeterias, Grill Buffets, and Buffets	False	False	False	8050.0	1.0
+2	51	27	722515	Snack and Nonalcoholic Beverage Bars	False	False	False	8050.0	1.0
+2	52	28	447110	Gasoline Stations with Convenience Stores	False	False	False	8050.0	1.0
+2	53	28	447190	Other Gasoline Stations	False	False	False	8050.0	1.0
+2	54	29	441110	New Car Dealers	False	False	False	8050.0	1.0
+2	55	29	441120	Used Car Dealers	False	False	False	8050.0	1.0
+2	56	29	441210	Recreational Vehicle Dealers	False	False	False	8050.0	1.0
+2	57	29	441222	Boat Dealers	False	False	False	8050.0	1.0
+2	58	29	441228	Motorcycle, ATV, and All Other Motor Vehicle Dealers	False	False	False	8050.0	1.0
+2	59	29	441310	Automotive Parts and Accessories Stores	False	False	False	8050.0	1.0
+2	60	29	441320	Tire Dealers	False	False	False	8050.0	1.0
+2	61	29	442110	Furniture Stores	False	False	False	8050.0	1.0
+2	62	29	442210	Floor Covering Stores	False	False	False	8050.0	1.0
+2	63	29	442291	Window Treatment Stores	False	False	False	8050.0	1.0
+2	64	29	442299	All Other Home Furnishings Stores	False	False	False	8050.0	1.0
+2	65	29	443141	Household Appliance Stores	False	False	False	8050.0	1.0
+2	66	29	443142	Electronics Stores	False	False	False	8050.0	1.0
+2	67	29	444110	Home Centers	False	False	False	8050.0	1.0
+2	68	29	444120	Paint and Wallpaper Stores	False	False	False	8050.0	1.0
+2	69	29	444130	Hardware Stores	False	False	False	8050.0	1.0
+2	70	29	444190	Other Building Material Dealers	False	False	False	8050.0	1.0
+2	71	29	444210	Outdoor Power Equipment Stores	False	False	False	8050.0	1.0
+2	72	29	444220	Nursery, Garden Center, and Farm Supply Stores	False	False	False	8050.0	1.0
+2	73	29	445210	Meat Markets	False	False	False	8050.0	1.0
+2	74	29	445220	Fish and Seafood Markets	False	False	False	8050.0	1.0
+2	75	29	445230	Fruit and Vegetable Markets	False	False	False	8050.0	1.0
+2	76	29	445291	Baked Goods Stores	False	False	False	8050.0	1.0
+2	77	29	445292	Confectionery and Nut Stores	False	False	False	8050.0	1.0
+2	78	29	445299	All Other Specialty Food Stores	False	False	False	8050.0	1.0
+2	79	29	445310	Beer, Wine, and Liquor Stores	False	False	False	8050.0	1.0
+2	80	29	446120	Cosmetics, Beauty Supplies, and Perfume Stores	False	False	False	8050.0	1.0
+2	81	29	446130	Optical Goods Stores	False	False	False	8050.0	1.0
+2	82	29	446191	Food (Health) Supplement Stores	False	False	False	8050.0	1.0
+2	83	29	446199	All Other Health and Personal Care Stores	False	False	False	8050.0	1.0
+2	84	29	448110	Men's Clothing Stores	False	False	False	8050.0	1.0
+2	85	29	448120	Women's Clothing Stores	False	False	False	8050.0	1.0
+2	86	29	448130	Children's and Infants' Clothing Stores	False	False	False	8050.0	1.0
+2	87	29	448140	Family Clothing Stores	False	False	False	8050.0	1.0
+2	88	29	448150	Clothing Accessories Stores	False	False	False	8050.0	1.0
+2	89	29	448190	Other Clothing Stores	False	False	False	8050.0	1.0
+2	90	29	448210	Shoe Stores	False	False	False	8050.0	1.0
+2	91	29	448310	Jewelry Stores	False	False	False	8050.0	1.0
+2	92	29	448320	Luggage and Leather Goods Stores	False	False	False	8050.0	1.0
+2	93	29	451110	Sporting Goods Stores	False	False	False	8050.0	1.0
+2	94	29	451120	Hobby, Toy, and Game Stores	False	False	False	8050.0	1.0
+2	95	29	451130	Sewing, Needlework, and Piece Goods Stores	False	False	False	8050.0	1.0
+2	96	29	451140	Musical Instrument and Supplies Stores	False	False	False	8050.0	1.0
+2	97	29	451211	Book Stores	False	False	False	8050.0	1.0
+2	98	29	451212	News Dealers and Newsstands	False	False	False	8050.0	1.0
+2	99	29	452112	Discount Department Stores	False	False	False	8050.0	1.0
+2	100	29	452910	Warehouse Clubs and Supercenters	False	False	False	8050.0	1.0
+2	101	29	452990	All Other General Merchandise Stores	False	False	False	8050.0	1.0
+2	102	29	453110	Florists	False	False	False	8050.0	1.0
+2	103	29	453210	Office Supplies and Stationery Stores	False	False	False	8050.0	1.0
+2	104	29	453220	Gift, Novelty, and Souvenir Stores	False	False	False	8050.0	1.0
+2	105	29	453310	Used Merchandise Stores	False	False	False	8050.0	1.0
+2	106	29	453920	Art Dealers	False	False	False	8050.0	1.0
+2	107	29	453930	Manufactured (Mobile) Home Dealers	False	False	False	8050.0	1.0
+2	108	29	453991	Tobacco Stores	False	False	False	8050.0	1.0
+2	109	29	453998	All Other Miscellaneous Store Retailers (except Tobacco Stores)	False	False	False	8050.0	1.0
+2	242	30	453910	Pet and Pet Supplies Stores	False	False	False	8050.0	1.0
+2	243	30	541940	Veterinary Services	False	False	False	8050.0	1.0
+2	244	30	812910	Pet Care (except Veterinary) Services	False	False	False	8050.0	1.0
+2	110	31	511110	Newspaper Publishers	False	False	False	8050.0	1.0
+2	111	31	511120	Periodical Publishers	False	False	False	8050.0	1.0
+2	112	31	511130	Book Publishers	False	False	False	8050.0	1.0
+2	113	31	511140	Directory and Mailing List Publishers	False	False	False	8050.0	1.0
+2	114	31	511191	Greeting Card Publishers	False	False	False	8050.0	1.0
+2	115	31	511199	All Other Publishers	False	False	False	8050.0	1.0
+2	116	31	512110	Motion Picture and Video Production	False	False	False	8050.0	1.0
+2	117	31	512120	Motion Picture and Video Distribution	False	False	False	8050.0	1.0
+2	118	31	512132	Drive-In Motion Picture Theaters	False	False	False	8050.0	1.0
+2	119	31	512191	Teleproduction and Other Postproduction Services	False	False	False	8050.0	1.0
+2	120	31	512199	Other Motion Picture and Video Industries	False	False	False	8050.0	1.0
+2	121	31	512210	Record Production	False	False	False	8050.0	1.0
+2	122	31	512220	Integrated Record Production/Distribution	False	False	False	8050.0	1.0
+2	123	31	512230	Music Publishers	False	False	False	8050.0	1.0
+2	124	31	512240	Sound Recording Studios	False	False	False	8050.0	1.0
+2	125	31	512290	Other Sound Recording Industries	False	False	False	8050.0	1.0
+2	126	31	515111	Radio Networks	False	False	False	8050.0	1.0
+2	127	31	515112	Radio Stations	False	False	False	8050.0	1.0
+2	128	31	515120	Television Broadcasting	False	False	False	8050.0	1.0
+2	129	31	515210	Cable and Other Subscription Programming	False	False	False	8050.0	1.0
+2	130	31	517110	Wired Telecommunications Carriers	False	False	False	8050.0	1.0
+2	131	31	517210	Wireless Telecommunications Carriers (except Satellite)	False	False	False	8050.0	1.0
+2	132	31	517410	Satellite Telecommunications	False	False	False	8050.0	1.0
+2	133	31	517911	Telecommunications Resellers	False	False	False	8050.0	1.0
+2	134	31	517919	All Other Telecommunications	False	False	False	8050.0	1.0
+2	135	31	518210	Data Processing, Hosting, and Related Services	False	False	False	8050.0	1.0
+2	136	31	519110	News Syndicates	False	False	False	8050.0	1.0
+2	137	31	519120	Libraries and Archives	False	False	False	8050.0	1.0
+2	138	31	519130	Internet Publishing and Broadcasting and Web Search Portals	False	False	False	8050.0	1.0
+2	139	31	519190	All Other Information Services	False	False	False	8050.0	1.0
+2	148	32	511210	Software Publishers	False	False	False	8050.0	1.0
+2	140	32	541110	Offices of Lawyers	False	False	False	8050.0	1.0
+2	141	32	541120	Offices of Notaries	False	False	False	8050.0	1.0
+2	142	32	541191	Title Abstract and Settlement Offices	False	False	False	8050.0	1.0
+2	143	32	541199	All Other Legal Services	False	False	False	8050.0	1.0
+2	144	32	541211	Offices of Certified Public Accountants	False	False	False	8050.0	1.0
+2	145	32	541213	Tax Preparation Services	False	False	False	8050.0	1.0
+2	146	32	541214	Payroll Services	False	False	False	8050.0	1.0
+2	147	32	541219	Other Accounting Services	False	False	False	8050.0	1.0
+2	149	32	541310	Architectural Services	False	False	False	8050.0	1.0
+2	150	32	541320	Landscape Architectural Services	False	False	False	8050.0	1.0
+2	151	32	541330	Engineering Services	False	False	False	8050.0	1.0
+2	152	32	541340	Drafting Services	False	False	False	8050.0	1.0
+2	153	32	541350	Building Inspection Services	False	False	False	8050.0	1.0
+2	154	32	541360	Geophysical Surveying and Mapping Services	False	False	False	8050.0	1.0
+2	155	32	541370	Surveying and Mapping (except Geophysical) Services	False	False	False	8050.0	1.0
+2	156	32	541380	Testing Laboratories	False	False	False	8050.0	1.0
+2	157	32	541410	Interior Design Services	False	False	False	8050.0	1.0
+2	158	32	541420	Industrial Design Services	False	False	False	8050.0	1.0
+2	159	32	541430	Graphic Design Services	False	False	False	8050.0	1.0
+2	160	32	541490	Other Specialized Design Services	False	False	False	8050.0	1.0
+2	161	32	541511	Custom Computer Programming Services	False	False	False	8050.0	1.0
+2	162	32	541512	Computer Systems Design Services	False	False	False	8050.0	1.0
+2	163	32	541513	Computer Facilities Management Services	False	False	False	8050.0	1.0
+2	164	32	541519	Other Computer Related Services	False	False	False	8050.0	1.0
+2	165	32	541611	Administrative Management and General Management Consulting Services	False	False	False	8050.0	1.0
+2	166	32	541612	Human Resources Consulting Services	False	False	False	8050.0	1.0
+2	167	32	541613	Marketing Consulting Services	False	False	False	8050.0	1.0
+2	168	32	541614	Process, Physical Distribution, and Logistics Consulting Services	False	False	False	8050.0	1.0
+2	169	32	541618	Other Management Consulting Services	False	False	False	8050.0	1.0
+2	170	32	541620	Environmental Consulting Services	False	False	False	8050.0	1.0
+2	171	32	541690	Other Scientific and Technical Consulting Services	False	False	False	8050.0	1.0
+2	172	32	541711	Research and Development in Biotechnology	False	False	False	8050.0	1.0
+2	173	32	541712	Research and Development in the Physical, Engineering, and Life Sciences (except Biotechnology)	False	False	False	8050.0	1.0
+2	174	32	541720	Research and Development in the Social Sciences and Humanities	False	False	False	8050.0	1.0
+2	175	32	541810	Advertising Agencies	False	False	False	8050.0	1.0
+2	176	32	541820	Public Relations Agencies	False	False	False	8050.0	1.0
+2	177	32	541830	Media Buying Agencies	False	False	False	8050.0	1.0
+2	178	32	541840	Media Representatives	False	False	False	8050.0	1.0
+2	179	32	541850	Outdoor Advertising	False	False	False	8050.0	1.0
+2	180	32	541860	Direct Mail Advertising	False	False	False	8050.0	1.0
+2	181	32	541870	Advertising Material Distribution Services	False	False	False	8050.0	1.0
+2	182	32	541890	Other Services Related to Advertising	False	False	False	8050.0	1.0
+2	183	32	541910	Marketing Research and Public Opinion Polling	False	False	False	8050.0	1.0
+2	184	32	541921	Photography Studios, Portrait	False	False	False	8050.0	1.0
+2	185	32	541922	Commercial Photography	False	False	False	8050.0	1.0
+2	186	32	541930	Translation and Interpretation Services	False	False	False	8050.0	1.0
+2	187	32	541990	All Other Professional, Scientific, and Technical Services	False	False	False	8050.0	1.0
+2	188	32	551111	Offices of Bank Holding Companies	False	False	False	8050.0	1.0
+2	189	32	551112	Offices of Other Holding Companies	False	False	False	8050.0	1.0
+2	190	32	551114	Corporate, Subsidiary, and Regional Managing Offices	False	False	False	8050.0	1.0
+2	191	33	611110	Elementary and Secondary Schools	False	False	False	8050.0	1.0
+2	192	33	611210	Junior Colleges	False	False	False	8050.0	1.0
+2	193	33	611310	Colleges, Universities, and Professional Schools	False	False	False	8050.0	1.0
+2	194	33	611410	Business and Secretarial Schools	False	False	False	8050.0	1.0
+2	195	33	611420	Computer Training	False	False	False	8050.0	1.0
+2	196	33	611430	Professional and Management Development Training	False	False	False	8050.0	1.0
+2	197	33	611511	Cosmetology and Barber Schools	False	False	False	8050.0	1.0
+2	198	33	611512	Flight Training	False	False	False	8050.0	1.0
+2	199	33	611513	Apprenticeship Training	False	False	False	8050.0	1.0
+2	200	33	611519	Other Technical and Trade Schools	False	False	False	8050.0	1.0
+2	201	33	611610	Fine Arts Schools	False	False	False	8050.0	1.0
+2	202	33	611620	Sports and Recreation Instruction	False	False	False	8050.0	1.0
+2	203	33	611630	Language Schools	False	False	False	8050.0	1.0
+2	204	33	611691	Exam Preparation and Tutoring	False	False	False	8050.0	1.0
+2	205	33	611692	Automobile Driving Schools	False	False	False	8050.0	1.0
+2	206	33	611699	All Other Miscellaneous Schools and Instruction	False	False	False	8050.0	1.0
+2	207	33	611710	Educational Support Services	False	False	False	8050.0	1.0
+2	208	34	711110	Theater Companies and Dinner Theaters	False	False	False	8050.0	1.0
+2	209	34	711120	Dance Companies	False	False	False	8050.0	1.0
+2	210	34	711130	Musical Groups and Artists	False	False	False	8050.0	1.0
+2	211	34	711190	Other Performing Arts Companies	False	False	False	8050.0	1.0
+2	212	34	711211	Sports Teams and Clubs	False	False	False	8050.0	1.0
+2	213	34	711212	Racetracks	False	False	False	8050.0	1.0
+2	214	34	711219	Other Spectator Sports	False	False	False	8050.0	1.0
+2	215	34	711310	Promoters of Performing Arts, Sports, and Similar Events with Facilities	False	False	False	8050.0	1.0
+2	216	34	711320	Promoters of Performing Arts, Sports, and Similar Events without Facilities	False	False	False	8050.0	1.0
+2	217	34	711410	Agents and Managers for Artists, Athletes, Entertainers, and Other Public Figures	False	False	False	8050.0	1.0
+2	218	34	711510	Independent Artists, Writers, and Performers	False	False	False	8050.0	1.0
+2	219	34	712120	Historical Sites	False	False	False	8050.0	1.0
+2	220	34	712190	Nature Parks and Other Similar Institutions	False	False	False	8050.0	1.0
+2	245	34	713120	Amusement Arcades	False	False	False	8050.0	1.0
+2	221	34	713210	Casinos (except Casino Hotels)	False	False	False	8050.0	1.0
+2	222	34	713290	Other Gambling Industries	False	False	False	8050.0	1.0
+2	223	34	713910	Golf Courses and Country Clubs	False	False	False	8050.0	1.0
+2	224	34	713920	Skiing Facilities	False	False	False	8050.0	1.0
+2	225	34	713930	Marinas	False	False	False	8050.0	1.0
+2	226	34	713950	Bowling Centers	False	False	False	8050.0	1.0
+2	227	34	713990	All Other Amusement and Recreation Industries	False	False	False	8050.0	1.0
+2	228	35	721120	Casino Hotels,y,,include with casinos as well	False	False	False	8050.0	1.0
+2	229	35	721191	Bed-and-Breakfast Inns	False	False	False	8050.0	1.0
+2	230	35	721199	All Other Traveler Accommodation	False	False	False	8050.0	1.0
+2	231	35	721211	RV (Recreational Vehicle) Parks and Campgrounds	False	False	False	8050.0	1.0
+2	232	35	721214	Recreational and Vacation Camps (except Campgrounds)	False	False	False	8050.0	1.0
+2	233	35	721310	Rooming and Boarding Houses	False	False	False	8050.0	1.0
+2	234	35	722310	Food Service Contractors	False	False	False	8050.0	1.0
+2	235	35	722320	Caterers	False	False	False	8050.0	1.0
+2	236	35	722330	Mobile Food Services	False	False	False	8050.0	1.0
+2	237	36	812111	Barber Shops	False	False	False	8050.0	1.0
+2	238	36	812112	Beauty Salons	False	False	False	8050.0	1.0
+2	239	36	812113	Nail Salons	False	False	False	8050.0	1.0
+2	240	36	812191	Diet and Weight Reducing Centers	False	False	False	8050.0	1.0
+2	241	36	812199	Other Personal Care Services	False	False	False	8050.0	1.0

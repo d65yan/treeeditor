@@ -1,0 +1,915 @@
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"> 
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <!--<script src="js/angular.min.js"></script>-->
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.hotkeys.js"></script>
+        <script src="js/moderniz.js"></script>  
+        <script src="jstree/jquery.jstree.js"></script> 
+        <script src="js/d3.v3.min.js"></script>
+        <script type="text/javascript">
+            
+              function DeleteNode(a,p){
+                    for(var i in a)
+                        this[i]=a[i];
+                    this.status=0;
+                    this.p=p;
+                    this.successProcess=function(){
+                        $('#del_elem_'+this.lidx).remove();
+                        this.status=1;
+                        p.checkCompleted();
+                    }
+                    this.failedProcess=function(){
+                        $('#del_elem_'+this.lidx).addClass('failed');
+                       this.status=2;
+                       p.checkCompleted();
+                    }
+                }
+            
+            
+            
+            function DeleteBatch(){
+                var batch=[];
+                var tpl='<li onclick="delbatch.del(__lidx__)" id="del_elem___lidx__">__name__</li>';
+                this.add=function(obj){
+                    batch.push(new DeleteNode(obj,this));
+                    redraw();
+                }
+                
+                
+
+                
+                this.del=function(idx){
+                    batch.splice(idx,1);
+                    redraw();
+                }
+
+                
+                this.checkForIdx=function(idx){
+                    for(var i=0;i<batch.length;i++){
+                        if(batch[i].idx==idx)
+                            return true;
+                    }
+                    return false;
+                }
+                
+                this.process=function(){
+                    for(var i=0; i<batch.length;i++){
+                        var dn=batch[i];
+                        original[dn.idx].Delete('successProcess','failedProcess',dn);
+                    }
+                }
+                
+               this.checkCompleted=function(){
+                    for(var h=0;h<batch.length;h++){
+                        if(!batch[h].status)
+                            return;
+                    }
+                    
+                    for(var h=batch.length-1;h>=0;h--){
+                        if(batch[h].success===1)
+                            batch.splice(h,1);
+                    }
+                    
+                }
+                
+                function redraw(){
+                    var content='';
+                    for(var i=0;i<batch.length;i++){
+                        var tp=tpl;
+                        batch[i].lidx=i;
+                        for(var j in batch[i]){
+                            var reg=new RegExp('__'+j+'__','g');
+                            tp=tp.replace(reg,batch[i][j]);
+                        }
+                        content+=tp;
+                    }
+                    $('#batchDeleteList').html(content);
+                    $('#delete_bucket button.delete').css('display',(batch.length?'block':'none'));
+                }
+                
+                
+                
+            }
+            
+            var delbatch=new DeleteBatch();
+            var objArr=null;
+            var original=[];
+            var nNode=null;
+            var updates=0;
+            var deletes=0;
+            var tree={};
+            /*var data_template='<table style="margin-left:30px;">\
+                <tr><td style="text-align:right;">name:</td><td><input id="name_edit___hid__" style="font-size:18px;" value="__name__"></td></tr>\
+                <!--<tr style="__HIDE_hid_-1__"><td style="text-align:right;">children:</td><td>__child_count__</td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">parent_id:</td><td>__parent__</td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">code:</td><td>__code__</td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">row id:</td><td>__hid__</td></tr>-->\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">leaf</td><td>:<select id="leaf_edit___hid__"><option value="False" __leaf_SELECT_False__>FALSE</option><option value="True" __leaf_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">population:</td><td><select id="population_edit___hid__"><option value="False" __population_SELECT_False__>FALSE</option><option value="True" __population_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">connective:</td><td><select id="connective_edit___hid__"><option value="False" __connective_SELECT_False__>FALSE</option><option value="True" __connective_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">bandwidth:</td><td><input value="__bandwidth__" style="__HIDE_bandwidth_undefined__" id=bandwidth_edit___hid__"></td></tr>\
+                <tr style="__HIDE_hid_-1__"><td style="text-align:right;">weight:</td><td><input value="__weight__" id="weight_edit___hid__"></td></tr>\
+            </table>\
+                <button onclick="original[__IDX__].UpdateFromUI();" style="__HIDE_hid_-1__" class="button node_button">Apply</button> <!--<button style="__HIDE_child_count_0__ __HIDE_hid_-1__" onclick="original[__IDX__].UpdateFromUI(true);" class="button node_button">Apply 2 children</button><button onclick="original[__IDX__].Delete();" style="__HIDE_hid_-1__" class="button node_button">Delete</button ><button>Delete & Clear Childre</button><button>Clear Children</button>--><button onclick="createNewNode(__IDX__)" class="button node_button">Create Children</button>';
+    */
+    
+           var data_template='<div id="floating_details___hid__" class="floating_details"><table style="margin-left:30px; font-size:11px;">\
+                <tr><td>name</td><td style="text-align:center;__HIDE_hid_-1__">leaf</td><td style="text-align:center;__HIDE_hid_-1__">population</td><td style="text-align:center;__HIDE_hid_-1__">connective</td><td style="text-align:center;__HIDE_hid_-1__">bandwidth</td><td style="text-align:center;__HIDE_hid_-1__">weight</td></tr>\
+                <tr><td style="text-align:right;"><input id="name_edit___hid__" style="font-size:11px" value="__name__" class="keyable"></td>\
+                <td style="text-align:right;__HIDE_hid_-1__"><select id="leaf_edit___hid__" style="font-size:11px"><option value="False" __leaf_SELECT_False__>FALSE</option><option value="True" __leaf_SELECT_True__>TRUE</option></select></td>\
+                <td style="text-align:right;__HIDE_hid_-1__"><select id="population_edit___hid__" style="font-size:11px"><option value="False" __population_SELECT_False__>FALSE</option><option value="True" __population_SELECT_True__>TRUE</option></select></td>\
+                <td style="text-align:right;__HIDE_hid_-1__"><select id="connective_edit___hid__" style="font-size:11px"><option value="False" __connective_SELECT_False__>FALSE</option><option value="True" __connective_SELECT_True__>TRUE</option></select></td>\
+                <td style="text-align:right;__HIDE_hid_-1__"><input  class="keyable" value="__bandwidth__" id="bandwidth_edit___hid__" style="font-size:11px; width:60px"></td>\
+                <td style="text-align:right;__HIDE_hid_-1__"><input  class="keyable" value="__weight__" id="weight_edit___hid__" style="font-size:11px;width:30px"></td></tr>\
+            </table>\
+                <button onclick="original[__IDX__].UpdateFromUI();" style="__HIDE_hid_-1__" class="button node_button">Apply</button><button onclick="createNewNode(__IDX__)" class="button node_button">Create Children</button></div>';
+    
+    
+    
+                       var new_data_template='<table style="margin-left:30px; margin-top:30px;">\
+                <tr><td style="text-align:right;">name:</td><td><input id="name_edit___hid__" style="font-size:18px;" value="__name__"></td></tr>\
+                <tr><td style="text-align:right;">leaf</td><td>:<select id="leaf_edit___hid__"><option value="False" __leaf_SELECT_False__>FALSE</option><option value="True" __leaf_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr><td style="text-align:right;">population:</td><td><select id="population_edit___hid__"><option value="False" __population_SELECT_False__>FALSE</option><option value="True" __population_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr><td style="text-align:right;">connective:</td><td><select id="connective_edit___hid__"><option value="False" __connective_SELECT_False__>FALSE</option><option value="True" __connective_SELECT_True__>TRUE</option></select></td></tr>\
+                <tr><td style="text-align:right;">bandwidth:</td><td><input value="__bandwidth__" style="__HIDE_bandwidth_undefined__" id=bandwidth_edit___hid__"></td></tr>\
+                <tr><td style="text-align:right;">weight:</td><td><input value="__weight__" id="weight_edit___hid__"></td></tr>\
+                <tr><td colspan="2"></button><button onclick="confirmCreate(__IDX__)" class="button node_button">Create</button><button onclick="delete nNode; $(\'#overall\').css(\'display\',\'none\'); $(\'#new_elem_box\').css(\'display\',\'none\');" class="button node_button">Cancel</button></td></tr></table>';
+
+    
+    
+            function Node(a){
+                for(var i in a)
+                    this[i]=a[i];
+                this.intern_operation_data={
+                    timestamps:{
+                        del:0,
+                        upd:0,
+                        crt:0
+                    }
+                };
+            };
+            
+            Node.prototype.toStr=function(tpl){
+                var tpl=tpl||data_template;
+                tpl=tpl.replace(/__IDX__/g,this.idx)
+                this.child_count=this.children?this.children[0].length:0;
+                for(var i in this){
+                    if(!$.isFunction(this[i]) && !$.isArray(this[i])){
+                        var reg=new RegExp('__'+i+'__','g');
+                        var reg_selected=new RegExp('__'+i+'_SELECT_'+this[i]+'__','g');
+                        var reg_not_selected=new RegExp('__'+i+'_SELECT_[False True]_','g');
+                        var reg_hide_on=new RegExp('__HIDE_'+i+'_'+this[i]+'__','g');
+                        tpl=tpl.replace(reg,this[i]).replace(reg_selected,'selected="selected"').replace(reg_hide_on,'display:none;');//.replace(reg_not_selected,'');
+                     }
+                }
+                return tpl;
+            };
+                        
+            Node.prototype.UpdateFromUI=function(){
+                        var updateObject={};    
+                        var update=false;
+                        for(var i in this){
+                                if(!$.isFunction(this[i]) && !$.isArray(this[i])){
+                                    if(!$('#'+i+'_edit_'+this.hid).length)
+                                     continue;
+                                 
+                                   var value=$('#'+i+'_edit_'+this.hid).val();
+                                   if(value.toString()!=this[i].toString()){
+                                       updateObject[i]=value;
+                                       update=true;
+                                   }
+                                }
+                         }
+                         if(update){
+                             updateObject.hid=this.hid;
+                             updateObject.code=this.code;
+                             this.Update(updateObject,this);
+                         }
+                
+                    }
+                    
+             Node.prototype.Update=function(update){
+                 var obj=this;
+                 updates++;
+                 $('#logs').append('<div class="notification">Updating '+this.name+'</div>');
+                 this.intern_operation_data.timestamps.upd=new Date().getTime();
+                        $.ajax('tree',{
+                            type:'PUT',
+                            contentType:'application/json; charset=UTF-8',
+                            data:JSON.stringify(update)
+                        }).success(function(){
+                            updates--;
+                            delete update.hid;
+                            delete update.code;
+                            for(var i in update)
+                                obj[i]=update[i];
+                            
+                            if(update.name)
+                               $('#'+obj.attr.id+'>a').html('<ins class="jstree-icon"> </ins>'+update.name);
+                           var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.upd);
+                            $('#logs').append('<div class="notification">Finished updating '+obj.name+' --->'+timegap+'</div>');
+                                
+                        }).error(function(err){
+                        updates--;
+                        //var rason=$.parseJSON(err.responseText);
+                        var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.upd);
+                            $('#details').html(obj.toStr());
+                            $('#logs').append('<div class="notification error">Updating '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                        });
+                        
+                    };
+                    
+                     Node.prototype.UpdateBranch=function(){
+                        if(this.children && this.children.length && this.children[0].length){
+                            var obj=this;
+                            d3.tsv('data/menu_test.tsv',function(data){
+                                for(var i=0;i<obj.children[0].length;i++){
+                                    for(var j=0;j<data.length;j++){
+                                        if(obj.children[0][i].hid*1==data[j].hid*1){
+                                            var idx=obj.children[0][i].idx;
+                                            for(var k in data[j]){
+                                                obj.children[0][i][k]=data[j][k];
+                                                original[idx][k]=data[j][k];
+                                                 $('#'+original[idx].attr.id+'>a').html('<ins class="jstree-icon"> </ins>'+original[idx].name);
+                                                 original[idx].UpdateBranch();
+                                            }
+                                     }
+                                 }
+                            }
+                         });
+                       }
+                    }
+                    
+              Node.prototype.GetParent=function(){
+                        for(var i=0; i<original.length;i++){
+                            if(original[i].hid*1==this.hid*1)
+                                return{idx:i};
+                            if(original[i].children && original[i].children[0]){
+                                elems= original[i].children[0];
+                                for(var j=0;j<elems.length;j++){
+                                    if(elems[j].hid*1==this.hid*1)
+                                        return {idx:j,parent:original[i]}
+                                }
+                            }
+                        }
+
+                    }   
+                    
+            Node.prototype.Delete=function(s,f,c){
+            deletes++;
+               /* if(!confirm('You are about to delete node "'+this.name+'" which have '+this.child_count+' children. Proceed?'))
+                    return;*/
+                $('#logs').append('<div class="notification">Deleting '+this.name+'</div>');
+                    var obj=this;
+                    this.intern_operation_data.timestamps.del=new Date().getTime();
+                 $.ajax('tree/'+obj.hid,{
+                            type:'DELETE',
+                            dataType:'text'
+                        }).success(function(){
+                            deletes--;
+                            obj.attr.id
+                            $('#tree').jstree('remove','#'+obj.attr.id);
+                            var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.del);
+                            $('#logs').append('<div class="notification">Finished deleting '+obj.name+' --->'+timegap+'</div>');
+                            if($.isFunction(c[s]))
+                               c[s].call(c);
+                            obj.name=obj.name+'---deleted at'+new Date().getTime();
+                        }).error(function(err){
+                            deletes--;
+                            var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.del);
+                            //var rason=$.parseJSON(err.responseText);
+                            $('#logs').append('<div class="notification error">Deleting '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                            if($.isFunction(c[f]))
+                                c[f].call(c);
+                        });
+                
+                
+            }
+    
+            function getData(dataholder){
+                 d3.tsv('tree',function(data){
+                    data.unshift({code:0,hid:"-1",name:'root',parent:"-1",state:'open',icon:'images/database-icon.png'})
+                    for(var i=0;i<data.length; i++){
+                        data[i].idx=i;
+                        data[i].intern_operation_data={
+                            timestamps:{
+                                del:0,
+                                upd:0,
+                                crt:0
+                            }
+                        };
+                        if(data[i].attr)
+                            data[i].temp_attributes=data[i].attr;
+                        data[i].attr={id:'row_hid_'+data[i].hid+'_'+i,idx:i};
+                       if(data[i].data)
+                            data[i].temp_data=data[i].data;
+                        
+                        
+                        data[i].data={title:data[i].name, attr:{},icon:''};
+                        
+                        data[i].toStr=function(tpl){
+                            var tpl=tpl||data_template;
+                            tpl=tpl.replace(/__IDX__/g,this.idx)
+                            this.child_count=this.children?this.children.length:0;
+                            for(var i in this){
+                                if(!$.isFunction(this[i]) && !$.isArray(this[i])){
+                                    var reg=new RegExp('__'+i+'__','g');
+                                    var reg_selected=new RegExp('__'+i+'_SELECT_'+this[i]+'__','g');
+                                    var reg_not_selected=new RegExp('__'+i+'_SELECT_[False True]_','g');
+                                    var reg_hide_on=new RegExp('__HIDE_'+i+'_'+this[i]+'__','g');
+                                    tpl=tpl.replace(reg,this[i]).replace(reg_selected,'selected="selected"').replace(reg_hide_on,'display:none;');//.replace(reg_not_selected,'');
+                                }
+                            }
+                            return tpl;
+                        }
+
+                        data[i].UpdateFromUI=function(children){
+                        var updateObject={};    
+                        var update=false;
+                        for(var i in this){
+                                if(!$.isFunction(this[i]) && !$.isArray(this[i])){
+                                    if(!$('#'+i+'_edit_'+this.hid).length)
+                                     continue;
+                                 
+                                   var value=$('#'+i+'_edit_'+this.hid).val();
+                                   if(value.toString()!=this[i].toString()){
+                                       updateObject[i]=value;
+                                       update=true;
+                                   }
+                                }
+                         }
+                         if(update){
+                             updateObject.hid=this.hid;
+                             updateObject.code=this.code;
+                             if(!children)
+                                this.Update(updateObject);
+                            else
+                               this.UpdateChildren(updateObject);
+                         }
+                
+                    }
+                    
+                        data[i].UpdateChildren=function(update){
+                            if(!this.children || !this.children.length || !this.children[0].length){
+                                alert('this element has no children');
+                                return;
+                            }
+                                
+                            if(!confirm('Your are about to apply a set of data to this node\'s children. Proceed?'))
+                                return;
+                            
+                            for(var i=0;i<this.children[0].length;i++){
+                                this.children[0][i].Update(update)
+                            }
+                            
+                            
+                        }
+                    
+                    data[i].Update=function(update){
+                         $('#logs').append('<div class="notification">Updating '+this.name+'</div>');
+                        var obj=this;
+                        this.intern_operation_data.timestamps.upd=new Date().getTime();
+                        $.ajax('tree',{
+                            type:'PUT',
+                            contentType:'application/json; charset=UTF-8',
+                            data:JSON.stringify(update)
+                        }).success(function(){
+                            delete update.hid;
+                            delete update.code;
+                            for(var i in update)
+                                obj[i]=update[i];
+                            
+                            if(update.name)
+                               $('#'+obj.attr.id+'>a').html('<ins class="jstree-icon"> </ins>'+update.name);
+                           
+                           var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.upd);
+                            $('#logs').append('<div class="notification">Finished updating '+obj.name+' --->'+timegap+'</div>');
+                            obj.UpdateBranch();
+
+                        }).error(function(err){
+                        //var rason=$.parseJSON(err.responseText);
+                        var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.upd);
+                            $('#details').html(obj.toStr());
+                            $('#logs').append('<div class="notification error">Updating '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                        });
+                        
+                    };
+                    
+                    data[i].UpdateBranch=function(){
+                        if(this.children && this.children.length && this.children[0].length){
+                            var obj=this;
+                            d3.tsv('branch/'+this.code,function(data){
+                                for(var i=0;i<obj.children[0].length;i++){
+                                    for(var j=0;j<data.length;j++){
+                                        if(obj.children[0][i].hid*1==data[j].hid*1){
+                                            var idx=obj.children[0][i].idx;
+                                            for(var k in data[j]){
+                                                obj.children[0][i][k]=data[j][k];
+                                                original[idx][k]=data[j][k];
+                                                 $('#'+original[idx].attr.id+'>a').html('<ins class="jstree-icon"> </ins>'+original[idx].name);
+                                                 original[idx].UpdateBranch();
+                                            }
+                                     }
+                                 }
+                            }
+                         });
+                       }
+                    }
+                    
+                    
+                    data[i].GetParent=function(){
+                        for(var i=0; i<original.length;i++){
+                            if(original[i].hid*1==this.hid*1)
+                                return{idx:i};
+                            if(original[i].children && original[i].children[0]){
+                                elems= original[i].children[0];
+                                for(var j=0;j<elems.length;j++){
+                                    if(elems[j].hid*1==this.hid*1)
+                                        return {idx:j,parent:original[i]}
+                                }
+                            }
+                        }
+
+                    };
+                    
+                   data[i].Delete=function(s,f,c){
+                deletes++;
+               /* if(!confirm('You are about to delete node "'+this.name+'" which have '+this.child_count+' children. Proceed?'))
+                    return;*/
+                $('#logs').append('<div class="notification">Deleting '+this.name+'</div>');
+                    var obj=this;
+                    this.intern_operation_data.timestamps.del=new Date().getTime();
+                 $.ajax('tree/'+obj.hid,{
+                            type:'DELETE',
+                            dataType:'text'
+                        }).success(function(){
+                            deletes--;
+                            obj.attr.id
+                            $('#tree').jstree('remove','#'+obj.attr.id);
+                            var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.del);
+                            $('#logs').append('<div class="notification">Finished deleting '+obj.name+' --->'+timegap+'</div>');
+                            if($.isFunction(c[s]))
+                               c[s].call(c);
+                            obj.name=obj.name+'---deleted at'+new Date().getTime();
+                        }).error(function(err){
+                            deletes--;
+                            var timegap=getTimeGap(new Date().getTime(),obj.intern_operation_data.timestamps.del);
+                            //var rason=$.parseJSON(err.responseText);
+                            $('#logs').append('<div class="notification error">Deleting '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                            if($.isFunction(c[f]))
+                                c[f].call(c);
+                        });
+                
+                
+            }
+                    
+                    
+                    }
+                    original=data;//.sort(function(a,b){return (((a.parent*1)-(b.parent*1))/Math.abs((a.parent*1)-(b.parent*1)))});
+                    objArr=makeTree(original);
+                   /* $('#tree').jstree({
+                        json_data:{
+                            data:objArr
+                        }
+                    });*/
+                   //$('body').append(JSON.stringify(objArr));
+                    
+                    $(function () {
+	    tree=$("#tree").jstree({
+                "dnd":{
+                    drop_finish:function(m){
+                        var idx=$(m.o[0]).attr('idx')*1;
+                        delbatch.add({name:original[idx].name,idx:idx})
+                        
+                    },
+                    drop_check:function(m){
+                        var idx=$(m.o[0]).attr('idx')*1;
+                        return !delbatch.checkForIdx(idx);
+                    }
+                },
+                "crrm":{
+                    move:{
+                        "check_move":function(m){
+                            
+                            var p_idx=$(m.r[0]).attr('idx')*1;
+                            var o_idx=$(m.o[0]).attr('idx')*1;
+                            
+                            if(!original[p_idx]||!original[p_idx].children || !original[p_idx].children.length || !original[p_idx].children[0].length)
+                                return true
+                            
+                            for(var i=0; i<original[p_idx].children[0].length;i++){
+                                if(original[p_idx].children[0][i].code*1==original[o_idx].code*1 || original[p_idx].children[0][i].name==original[o_idx].name)
+                                    return false;
+                            }
+                            
+                            return true;
+                        }
+                    }
+                },
+	        "json_data" : {
+	            "data" : objArr
+	        },
+	        "plugins" :  ["themes","json_data","ui","crrm","dnd"]
+	    });
+            tree.bind("select_node.jstree", function (e, data) {
+                    var idx=data.rslt.obj.attr('idx')*1;
+                    $('#details').html(original[idx].toStr());
+                    $('#name_edit_'+original[idx].hid).focus();
+                    $('#name_edit_'+original[idx].hid).select();
+                    $('#floating_details_'+original[idx].hid+' .keyable').keypress(function(event){
+                        if(event.keyCode==13)
+                            original[idx].UpdateFromUI();
+                    })
+                
+            
+        });
+        tree.bind('move_node.jstree',function(event,data){
+           var p_idx=$(data.rslt.r[0]).attr('idx')*1;
+           var o_idx=$(data.rslt.o[0]).attr('idx')*1;
+           
+           var updateObj={code:original[o_idx].code,hid:original[o_idx].hid,parent:original[p_idx].code};
+           $('#logs').append('<div class="notification">Moving '+original[o_idx].name+'</div>');
+                var obj=this;
+                original[o_idx].intern_operation_data.timestamps.upd=new Date().getTime();
+            $.ajax({
+                type: "PUT",
+                url: "tree",
+                data: JSON.stringify(updateObj)
+            }).success(function(d){
+                original[o_idx].parent=original[p_idx].code;
+                var parent=original[o_idx].GetParent();
+                if(!original[p_idx].children)
+                    original[p_idx].children=[[]];
+                original[p_idx].children[0].push(parent.parent.children[0].splice(parent.idx,1)[0]);
+                $('#details').html(original[o_idx].toStr());
+                
+                var timegap=getTimeGap(new Date().getTime(),original[o_idx].intern_operation_data.timestamps.upd);
+                 $('#logs').append('<div class="notification error">Finished moving '+original[o_idx].name+' ---> '+timegap+'</div>');
+                
+            }).error(function( err ) {
+                 $.jstree.rollback(data.rlbk);
+                 //var rason=$.parseJSON(err.responseText);
+                 var timegap=getTimeGap(new Date().getTime(),original[o_idx].intern_operation_data.timestamps.upd);
+                 $('#logs').append('<div class="notification error">Moving '+original[o_idx].name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+            });
+       //$('body').append(JSON.stringify($(data.rslt.np[0]).attr("idx")));
+        });
+	});
+                    
+                    
+                })
+            }
+            
+            function makeTree(data){
+                var rootParent=data[0].parent;
+                var tree=d3.nest().key(function(d){return d.parent}).entries(data);
+                if(tree[tree.length-1].key*1==-1)
+                    tree.unshift(tree.pop());
+                var rootNodes=[];
+                $.merge(rootNodes,tree[0]);
+                //delete tree[0];
+                do{
+                    for(var i=0;i<tree.length-1;i++){
+                       var found=false;
+                        for(var j=0;j<tree[i].values.length;j++){
+                            if(tree[i].values[j].code*1==tree[tree.length-1].key*1){
+                                tree[i].values[j].children=[];
+                                var ltree=tree.pop();
+                                tree[i].values[j].children.push(ltree.values);
+                                i--;
+                                found=true;
+                                break;
+                            }
+                        }
+                        if(found)
+                            break;
+                    }
+                    
+                }while(tree.length>1)
+                
+                return tree[0].values;
+            }
+            
+            function createNewNode(idx){
+                nNode= new Node({hid:-2,name:'New elem',code:-2,parent:original[idx].code,leaf:original[idx].leaf||'False',population:original[idx].population||'False',connective:original[idx].connective||'False',bandwidth:original[idx].bandwidth||'0',weight:original[idx].weight||'0',idx:idx});
+                //$('#new_elem_box').html(nNode.toStr(new_data_template));
+                $('#logs').append('<div class="notification">Creating '+nNode.name+'</div>');
+                var obj={};
+                $.extend(obj,nNode);
+                delete obj.hid;
+                delete obj.code;
+                delete obj.idx;
+                delete obj.child_count;
+                delete obj.intern_operation_data;
+                nNode.intern_operation_data.timestamps.crt=new Date().getTime();
+                 $.ajax('tree',{
+                            type:'POST',
+                            /*dataType:'json',*/
+                            contentType:'application/json; charset=UTF-8',
+                            data:JSON.stringify(obj)
+                        }).success(function(data){
+                            //var data={success:1, code:2345423,hid:34534544};
+                            nNode.code=data.code;
+                            nNode.hid=data.hid;
+                            nNode.name='Element '+data.code;
+                            if(!original[idx].children)
+                                original[idx].children=[[]];
+                            nNode.idx=original.length;
+                             if(nNode.attr)
+                            nNode.temp_attributes=nNode.attr;
+                        nNode.attr={idx:nNode.idx,id:'row_hid_'+nNode.hid+'_'+nNode.idx}
+                        if(nNode.data)
+                            nNode.temp_data=nNode.data;
+                        
+                      
+                        
+                        nNode.data={title:nNode.name, attr:{},icon:''};
+                        
+                             original[idx].children[0].push(nNode);
+                            original.push(nNode);
+                            $('#tree').jstree('create','#'+original[idx].attr.id,'last',nNode,null,true);
+                             var timegap=getTimeGap(new Date().getTime(),nNode.intern_operation_data.timestamps.crt);
+                             $('#logs').append('<div class="notification">Finished creating '+obj.name+' -->'+timegap+'</div>');
+                             nNode.Update({name:nNode.name,hid:nNode.hid,code:nNode.code});
+                        }).error(function(err){
+                            //var rason=$.parseJSON(err.responseText);
+                            
+                            var timegap=getTimeGap(new Date().getTime(),nNode.intern_operation_data.timestamps.crt);
+                            
+                            $('#logs').append('<div class="notification error">Creating '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                        });
+                
+                
+                
+                
+            }
+            
+            function confirmCreate(idx){
+                for(var i in nNode){
+                    if(!$.isFunction(nNode[i]) && !$.isArray(nNode[i])){
+                       if(!$('#'+i+'_edit_'+nNode.hid).length)
+                            continue;
+                                 
+                       var value=$('#'+i+'_edit_'+nNode.hid).val();
+                       nNode[i]=value;
+                     }
+                }
+                
+                
+                
+                
+                if(original[idx].children && original[idx].children.length && original[idx].children[0]){
+                    for(var i =0;i<original[idx].children[0].length;i++){
+                        if(nNode.name==original[idx].children[0][i].name){
+                            alert('there is other child using this name under this parent. Please select other name.');
+                            return;
+                        }
+                    }
+                }
+                
+
+                
+                
+                $('#logs').append('<div class="notification">Creating '+nNode.name+'</div>');
+                var obj={};
+                $.extend(obj,nNode);
+                delete obj.hid;
+                delete obj.code;
+                delete obj.idx;
+                delete obj.child_count;
+                delete obj.intern_operation_data;
+                nNode.intern_operation_data.timestamps.crt=new Date().getTime();
+                 $.ajax('tree',{
+                            type:'POST',
+                            /*dataType:'json',*/
+                            contentType:'application/json; charset=UTF-8',
+                            data:JSON.stringify(obj)
+                        }).success(function(data){
+                            //var data={success:1, code:2345423,hid:34534544};
+                            nNode.code=data.code;
+                            nNode.hid=data.hid;
+                            if(!original[idx].children)
+                                original[idx].children=[[]];
+                            nNode.idx=original.length;
+                             if(nNode.attr)
+                            nNode.temp_attributes=nNode.attr;
+                        nNode.attr={id:'row_hid_'+nNode.hid+'_'+i,idx:nNode.idx}
+                        if(nNode.data)
+                            nNode.temp_data=nNode.data;
+                        
+                        nNode.data=nNode.name;
+                            original[idx].children[0].push(nNode);
+                            original.push(nNode);
+                            $('#tree').jstree('create','#'+original[idx].attr.id,'last',nNode,null,true);
+                             $('#overall').css('display','none'); $('#new_elem_box').css('display','none');
+                             var timegap=getTimeGap(new Date().getTime(),nNode.intern_operation_data.timestamps.crt);
+                             $('#logs').append('<div class="notification">Finished creating '+obj.name+' -->'+timegap+'</div>');
+                        }).error(function(err){
+                            //var rason=$.parseJSON(err.responseText);
+                            
+                            var timegap=getTimeGap(new Date().getTime(),nNode.intern_operation_data.timestamps.crt);
+                            
+                            $('#logs').append('<div class="notification error">Creating '+obj.name+' failed with message: "'+err.statusText+'" ---> '+timegap+'</div>');
+                            $('#overall').css('display','none'); $('#new_elem_box').css('display','none');
+                        });
+                
+                
+                
+            }
+            
+            function getTimeGap(now,before){
+                var gap=now-before;
+                if(gap <1000)
+                    return gap+' ms...';
+                
+                var ms=gap%1000;
+                ms+=' ms';
+                gap=Math.floor(gap/1000);
+                if(gap<60)
+                    return gap+'s '+ms;
+                
+                var s=gap%60;
+                s+= ' s'
+                gap=Math.floor(gap/60);
+                if(gap<60)
+                    return gap+' min '+s+ms;
+                
+                
+            }
+            
+            $(document).ready(function(){
+                getData(objArr);
+                
+            })
+        </script>
+        
+        <style > 
+            #tree{
+                
+                width:300px;
+                overflow-x:auto;
+                    
+            }
+
+
+            #delete_bucket{
+                
+                width:300px;
+                overflow-x:auto;
+                min-height:300px;
+                border-right-style: double;
+                border-right-color: red;
+                border-right-width: 3px;
+                    
+            }
+            
+            #delete_bucket li{
+                cursor:pointer;
+            }
+            
+            #details{
+               min-width:505px; 
+               border-left-style: double;
+                border-left-width:3px;
+                min-height:300px;
+                position:relative;
+            }
+            
+            .floating_details{
+                position:fixed;
+                top:30px
+            }
+            
+            #overall{
+                background-color: black;
+                opacity:0.6;
+                z-index:100;
+                position:absolute;
+                width:100%;
+                height:100%;
+                display:none;
+                top:0px;
+                left:0px;
+            }
+            
+            #new_elem_box{
+                background-color: white;
+                border-style:solid;
+                border-width:thin;
+                border-radius: 10px;
+                z-index:101;
+                position:absolute;
+                width:400px;
+                height:500px;
+                display:none;
+                margin-left:50%;
+                left:-200px;
+                top:20px;
+                
+            }
+            
+            #logs{
+                width:400px;
+                min-height: 300px;
+                max-height: 800px;
+                border-left-style: double;
+                border-left-width:3px;
+                font-size:9px;
+                padding-left:10px;
+            }
+            
+            .notification.error{
+                color:red;
+                font-weight:bold;
+            }
+            .button{
+                color:white;
+                border-radius: 10px;
+                margin-left:5px;
+                margin-right:5px;
+                cursor:pointer;
+            }
+            
+            .node_button{
+                background-color: #006DCC;
+                background-image: -moz-linear-gradient(center top , #0088CC, #0044CC);
+                background-repeat: repeat-x;
+                border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+                color: #FFFFFF;
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+                
+            }
+            
+            .node_button:hover{
+               background-image:none;
+                background-color:#0044CC;
+            }
+            
+            .button.delete{
+                background-color: red;
+                background-image: -moz-linear-gradient(center top , red, pink);
+                background-repeat: repeat-x;
+                border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+                color: #FFFFFF;
+                text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+                
+            }
+            .button.delete:hover{
+                background-image:none;
+                background-color:#red;
+            }
+            
+            li.failed{
+                color:red;
+            }
+            
+            li#row_hid_-1_0>a ins{
+                width:30px !important;
+                height:30px !important;     
+            }
+            
+            li#row_hid_-1_0>a{
+                  height:30px !important;
+            }
+        </style>
+    
+    
+    
+
+    </head>
+    <body>
+       <div style="position:relative">
+        <table>
+            <tr>
+                <th>Delete bucket</th><th>Data tree</th><th>Edit board</th><th>Logs</th>
+            </tr>
+            <tr>
+                 <td style="vertical-align: top;">
+                    <div id="delete_bucket" class="jstree-drop">
+                        <ul id="batchDeleteList"></ul><button class="button delete" style="display:none" onclick="delbatch.process()">Process</button>
+                    </div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="tree"></div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="details"></div>
+                </td>
+                <td style="vertical-align: top;">
+                    <div id="logs"></div>
+                </td>
+        </tr>
+        </table>
+           <div id="overall"></div>
+           <div id="new_elem_box"></div>
+           </div>
+    </body>
+</html>
